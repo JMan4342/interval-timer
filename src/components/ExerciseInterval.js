@@ -1,43 +1,31 @@
 import { useState, useEffect } from "react";
 
 export const ExerciseInterval = () => {
-  const [timer, setTimer] = useState("00:00");
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
-  const getTimeRemaining = (e) => {
-    const total = Date.parse(e) - Date.parse(new Date());
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    return {
-      total,
-      minutes,
-      seconds,
-    };
-  };
-
-  const startTimer = (e) => {
-    let { total, minutes, seconds } = getTimeRemaining(e);
-    if (total >= 0) {
-      setTimer(
-        (minutes > 9 ? minutes : "0" + minutes) +
-          ":" +
-          (seconds > 9 ? seconds : "0" + seconds)
-      );
-    }
-  };
+  function toggle() {
+      setIsActive(!isActive);
+  }
 
   useEffect(() => {
-    startTimer(timer());
-  }, []);
+      let interval = null;
+      if (isActive) {
+          interval = setInterval(() => {
+              setSeconds(seconds => seconds - 1);
+          }, 1000)
+      } else if (isActive && seconds ===0) {
+          clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+  }, [isActive, seconds]);
 
   return (
     <>
       <label>
-        <input type="number" value={minutes} />
+        <input type="number" name="seconds" value={seconds} onChange={(e) => setSeconds(e.target.value)}/>
       </label>
-      <label>
-        <input type="number" value={seconds} />
-      </label>
-      <button onClick={startTimer}>Start</button>
+      <button onClick={toggle}>Start</button>
     </>
   );
 };
