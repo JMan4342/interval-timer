@@ -16,6 +16,7 @@ export const ExerciseInterval = () => {
       }, 1000);
     } else if (isActive && seconds === 0) {
       clearInterval(interval);
+      setIsActive(false)
     }
     return () => clearInterval(interval);
   }, [isActive, seconds]);
