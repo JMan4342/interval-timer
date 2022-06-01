@@ -5,25 +5,31 @@ export const ExerciseInterval = () => {
   const [isActive, setIsActive] = useState(false);
 
   function toggle() {
-      setIsActive(!isActive);
+    setIsActive(!isActive);
   }
 
   useEffect(() => {
-      let interval = null;
-      if (isActive) {
-          interval = setInterval(() => {
-              setSeconds(seconds => seconds - 1);
-          }, 1000)
-      } else if (isActive && seconds ===0) {
-          clearInterval(interval);
-      }
-      return () => clearInterval(interval);
+    let interval = null;
+    if (isActive && seconds > 0) {
+      interval = setInterval(() => {
+        setSeconds((seconds) => seconds - 1);
+      }, 1000);
+    } else if (isActive && seconds < 0) {
+      clearInterval(interval);
+      setIsActive(isActive);
+    }
+    return () => clearInterval(interval);
   }, [isActive, seconds]);
 
   return (
     <>
       <label>
-        <input type="number" name="seconds" value={seconds} onChange={(e) => setSeconds(e.target.value)}/>
+        <input
+          type="number"
+          name="seconds"
+          value={seconds}
+          onChange={(e) => setSeconds(e.target.value)}
+        />
       </label>
       <button onClick={toggle}>Start</button>
     </>
