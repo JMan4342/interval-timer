@@ -14,9 +14,8 @@ export const ExerciseInterval = () => {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
-    } else if (isActive && seconds < 0) {
+    } else if (isActive && seconds === 0) {
       clearInterval(interval);
-      setIsActive(isActive);
     }
     return () => clearInterval(interval);
   }, [isActive, seconds]);
@@ -31,7 +30,7 @@ export const ExerciseInterval = () => {
           onChange={(e) => setSeconds(e.target.value)}
         />
       </label>
-      <button onClick={toggle}>Start</button>
+      <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
     </>
   );
 };
