@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const ExerciseInterval = () => {
+export const RestInterval = () => {
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
