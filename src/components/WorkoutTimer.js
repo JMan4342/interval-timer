@@ -6,7 +6,7 @@ export const WorkoutTimer = () => {
   return (
     <>
       <ExerciseInterval />
-      <RestInterval />
+      {/* <RestInterval /> */}
     </>
   );
 };

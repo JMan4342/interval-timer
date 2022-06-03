@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 export const ExerciseInterval = () => {
-  const [seconds, setSeconds] = useState(0);
+  const [exerciseSeconds, setExerciseSeconds] = useState(0);
+  const [restSeconds, setRestSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
 
   function toggle() {
@@ -9,27 +10,45 @@ export const ExerciseInterval = () => {
   }
 
   useEffect(() => {
-    let interval = null;
-    if (isActive && seconds > 0) {
-      interval = setInterval(() => {
-        setSeconds((seconds) => seconds - 1);
+    let exerciseInterval = null;
+    let restInterval = null;
+    if (isActive && exerciseSeconds > 0 && restSeconds >= 0) {
+        exerciseInterval = setInterval(() => {
+            setExerciseSeconds((exerciseSeconds) => exerciseSeconds - 1);
       }, 1000);
-    } else if (isActive && seconds === 0) {
-      clearInterval(interval);
-      setIsActive(false);
+    } else if (isActive && exerciseSeconds === 0 && restSeconds >= 0) {
+      clearInterval(exerciseInterval);
+      restInterval = setInterval(() => {
+        setRestSeconds((restSeconds) => restSeconds - 1);
+  }, 1000);
+    //   setIsActive(false);
+    } else if (isActive && exerciseSeconds === 0 && restSeconds === 0) {
+        clearInterval(restInterval);
+        setIsActive(false);
     }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
+    return () => {
+        clearInterval(exerciseInterval);
+        clearInterval(restInterval);
+    }
+  }, [isActive, exerciseSeconds, restSeconds]);
 
   return (
     <>
       <label>
         <input
           type="number"
-          name="seconds"
-          value={seconds}
-          onChange={(e) => setSeconds(e.target.value)}
-        />
+          name="exerciseSeconds"
+          value={exerciseSeconds}
+          onChange={(e) => setExerciseSeconds(e.target.value)}
+        />Exercise
+      </label>
+      <label>
+        <input
+          type="number"
+          name="restSeconds"
+          value={restSeconds}
+          onChange={(e) => setRestSeconds(e.target.value)}
+        />Rest
       </label>
       <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
     </>
