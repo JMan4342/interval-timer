@@ -12,24 +12,28 @@ export const ExerciseInterval = () => {
   useEffect(() => {
     let exerciseInterval = null;
     let restInterval = null;
-    if (isActive && exerciseSeconds > 0 && restSeconds >= 0) {
-        exerciseInterval = setInterval(() => {
-            setExerciseSeconds((exerciseSeconds) => exerciseSeconds - 1);
+    if (isActive && exerciseSeconds > 0 && restSeconds > 0) {
+      exerciseInterval = setInterval(() => {
+        setExerciseSeconds((exerciseSeconds) => exerciseSeconds - 1);
       }, 1000);
-    } else if (isActive && exerciseSeconds === 0 && restSeconds >= 0) {
+    } else if (isActive && exerciseSeconds > 0 && restSeconds === 0) {
+      exerciseInterval = setInterval(() => {
+        setExerciseSeconds((exerciseSeconds) => exerciseSeconds - 1);
+      }, 1000);
+    } else if (isActive && exerciseSeconds === 0 && restSeconds > 0) {
       clearInterval(exerciseInterval);
       restInterval = setInterval(() => {
         setRestSeconds((restSeconds) => restSeconds - 1);
-  }, 1000);
-    //   setIsActive(false);
+      }, 1000);
+      //   setIsActive(false);
     } else if (isActive && exerciseSeconds === 0 && restSeconds === 0) {
-        clearInterval(restInterval);
-        setIsActive(false);
+      clearInterval(restInterval);
+      setIsActive(false);
     }
     return () => {
-        clearInterval(exerciseInterval);
-        clearInterval(restInterval);
-    }
+      clearInterval(exerciseInterval);
+      clearInterval(restInterval);
+    };
   }, [isActive, exerciseSeconds, restSeconds]);
 
   return (
@@ -40,7 +44,8 @@ export const ExerciseInterval = () => {
           name="exerciseSeconds"
           value={exerciseSeconds}
           onChange={(e) => setExerciseSeconds(e.target.value)}
-        />Exercise
+        />
+        Exercise
       </label>
       <label>
         <input
@@ -48,7 +53,8 @@ export const ExerciseInterval = () => {
           name="restSeconds"
           value={restSeconds}
           onChange={(e) => setRestSeconds(e.target.value)}
-        />Rest
+        />
+        Rest
       </label>
       <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
     </>
