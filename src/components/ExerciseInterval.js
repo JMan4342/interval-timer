@@ -38,25 +38,29 @@ export const ExerciseInterval = () => {
 
   return (
     <>
-      <label>
-        <input
-          type="number"
-          name="exerciseSeconds"
-          value={exerciseSeconds}
-          onChange={(e) => setExerciseSeconds(e.target.value)}
-        />
-        Exercise
-      </label>
-      <label>
-        <input
-          type="number"
-          name="restSeconds"
-          value={restSeconds}
-          onChange={(e) => setRestSeconds(e.target.value)}
-        />
-        Rest
-      </label>
-      <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
+      <div class="container">
+        <div class="row">
+          <label>Exercise</label>
+          <input
+            type="number"
+            name="exerciseSeconds"
+            value={exerciseSeconds}
+            onChange={(e) => setExerciseSeconds(e.target.value)}
+          />
+        </div>
+        <div class="row">
+          <label>Rest</label>
+          <input
+            type="number"
+            name="restSeconds"
+            value={restSeconds}
+            onChange={(e) => setRestSeconds(e.target.value)}
+          />
+        </div>
+        <div class="row">
+          <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
+        </div>
+      </div>
     </>
   );
 };
