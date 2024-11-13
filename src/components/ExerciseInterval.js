@@ -39,27 +39,44 @@ export const ExerciseInterval = () => {
   return (
     <>
       <div class="container">
-        <div class="row">
-          <label>Exercise</label>
+        <div class="row my-1">
+          <label
+            for="exerciseInterval"
+            class="form-label col-sm-12 d-flex justify-content-start"
+          >
+            Exercise
+          </label>
           <input
+            id="exerciseInterval"
             type="number"
             name="exerciseSeconds"
+            class="form-control text-center w-25 col-sm-12"
             value={exerciseSeconds}
             onChange={(e) => setExerciseSeconds(e.target.value)}
           />
         </div>
-        <div class="row">
-          <label>Rest</label>
+        <div class="row my-1">
+          <label
+            for="restInterval"
+            class="form-label col-sm-12 d-flex justify-content-start"
+          >
+            Rest
+          </label>
           <input
+            id="restInterval"
             type="number"
             name="restSeconds"
+            class="form-control text-center w-25 col-sm-12"
             value={restSeconds}
             onChange={(e) => setRestSeconds(e.target.value)}
           />
         </div>
-        <div class="row">
-          <button onClick={toggle}>{isActive ? "Pause" : "Start"}</button>
-        </div>
+        <button
+          class="btn btn-primary d-flex justify-content-start"
+          onClick={toggle}
+        >
+          {isActive ? "Pause" : "Start"}
+        </button>
       </div>
     </>
   );
